@@ -1953,7 +1953,6 @@
     },
     "categories": {
       "title": "Providers",
-      "quickFill": "Quick Fill",
       "activeCount": "{{active}}/{{total}} active"
     },
     "providerNames": {
@@ -2249,6 +2248,9 @@
   "workbuddy_quota": {
     "site_label": "Site",
     "account_label": "Account",
+    "credits_label": "Credits remaining",
+    "credits_value": "{{remaining}} / {{capacity}}",
+    "credits_unknown": "Unknown",
     "token_expiry": "Access token expires",
     "expiry_unknown": "Unknown",
     "no_data": "No account info recorded in the credential",

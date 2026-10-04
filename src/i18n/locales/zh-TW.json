@@ -1977,7 +1977,6 @@
     },
     "categories": {
       "title": "提供商",
-      "quickFill": "快速接入",
       "activeCount": "{{active}}/{{total}} 活躍"
     },
     "providerNames": {
@@ -2273,6 +2272,9 @@
   "workbuddy_quota": {
     "site_label": "站點",
     "account_label": "帳號",
+    "credits_label": "剩餘積分",
+    "credits_value": "{{remaining}} / {{capacity}}",
+    "credits_unknown": "未知",
     "token_expiry": "存取權杖到期",
     "expiry_unknown": "未知",
     "no_data": "憑證內未記錄帳號資訊",

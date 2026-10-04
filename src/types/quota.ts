@@ -286,12 +286,28 @@ export interface WorkBuddyQuotaWindow {
   atMs: number | null;
 }
 
-/** Read-only account/session observation; no real balance endpoint exists yet. */
+export interface WorkBuddyCreditPackage {
+  name?: string;
+  capacity: number;
+  used: number;
+  remaining: number;
+  expiresAt?: string;
+}
+
+export interface WorkBuddyCreditsResponse {
+  credits: number;
+  packages: WorkBuddyCreditPackage[];
+}
+
+/** Read-only account/session observation plus live billing credits. */
 export interface WorkBuddyQuotaData {
   windows: WorkBuddyQuotaWindow[];
   observedAtMs: number | null;
   site: 'workbuddy' | 'workbuddy-ai' | null;
   uid: string | null;
+  credits: number | null;
+  capacity: number | null;
+  packages: WorkBuddyCreditPackage[];
 }
 
 export interface WorkBuddyQuotaState extends WorkBuddyQuotaData {

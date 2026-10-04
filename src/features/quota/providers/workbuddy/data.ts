@@ -1,12 +1,15 @@
 import type { TFunction } from 'i18next';
 import type { AuthFileItem, WorkBuddyQuotaData, WorkBuddyQuotaState } from '@/types';
+import { authFilesApi } from '@/services/api';
 import { isWorkBuddyFile, isDisabledAuthFile } from '@/utils/quota';
 import type { QuotaProviderData } from '../types';
 
 type WorkBuddySite = 'workbuddy' | 'workbuddy-ai';
 
 const siteOf = (file: AuthFileItem): WorkBuddySite => {
-  const key = String(file.provider ?? file.type ?? '').trim().toLowerCase();
+  const key = String(file.provider ?? file.type ?? '')
+    .trim()
+    .toLowerCase();
   return key === 'workbuddy-ai' ? 'workbuddy-ai' : 'workbuddy';
 };
 
@@ -27,18 +30,16 @@ const readMs = (value: unknown): number | null => {
   return null;
 };
 
-/**
- * WorkBuddy exposes no balance endpoint to plugin clients; the card surfaces
- * the credential's recorded identity plus token expiry so operators can see
- * account health and when a refresh is due.
- */
-const fetchWorkBuddyQuota = (file: AuthFileItem): Promise<WorkBuddyQuotaData> => {
+/** Fetches the account identity and the live read-only billing snapshot. */
+const fetchWorkBuddyQuota = async (file: AuthFileItem): Promise<WorkBuddyQuotaData> => {
   const meta = (file.metadata ?? file) as Record<string, unknown>;
   const nickname = readString(meta.nickname ?? meta.name ?? meta.label);
   const uid = readString(meta.uid);
   const expiresAtMs = readMs(meta.expires_at ?? meta.expired);
+  const credits = await authFilesApi.fetchWorkBuddyCredits(file);
+  const capacity = credits.packages.reduce((total, item) => total + item.capacity, 0);
 
-  return Promise.resolve({
+  return {
     windows: [
       { id: 'account', value: nickname ?? uid, atMs: null },
       { id: 'token_expiry', value: null, atMs: expiresAtMs },
@@ -46,7 +47,10 @@ const fetchWorkBuddyQuota = (file: AuthFileItem): Promise<WorkBuddyQuotaData> =>
     observedAtMs: Date.now(),
     site: siteOf(file),
     uid,
-  });
+    credits: credits.credits,
+    capacity: capacity > 0 ? capacity : null,
+    packages: credits.packages,
+  };
 };
 
 const emptyData = (): WorkBuddyQuotaData => ({
@@ -54,6 +58,9 @@ const emptyData = (): WorkBuddyQuotaData => ({
   observedAtMs: null,
   site: null,
   uid: null,
+  credits: null,
+  capacity: null,
+  packages: [],
 });
 
 export const WORKBUDDY_CONFIG: QuotaProviderData<WorkBuddyQuotaState, WorkBuddyQuotaData> = {

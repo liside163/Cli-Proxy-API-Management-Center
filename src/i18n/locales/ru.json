@@ -1947,7 +1947,6 @@
     },
     "categories": {
       "title": "Провайдеры",
-      "quickFill": "Быстрое заполнение",
       "activeCount": "{{active}}/{{total}} активных"
     },
     "providerNames": {
@@ -2243,6 +2242,9 @@
   "workbuddy_quota": {
     "site_label": "Сайт",
     "account_label": "Аккаунт",
+    "credits_label": "Осталось кредитов",
+    "credits_value": "{{remaining}} / {{capacity}}",
+    "credits_unknown": "Неизвестно",
     "token_expiry": "Истекает токен доступа",
     "expiry_unknown": "Неизвестно",
     "no_data": "В учётных данных нет информации об аккаунте",

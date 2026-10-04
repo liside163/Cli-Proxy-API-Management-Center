@@ -5,8 +5,8 @@
 import { apiClient } from './client';
 import { getConfigValue, guardConfigConnection } from './configValue';
 import { isRecord } from '@/utils/helpers';
-import type { AuthFilesResponse } from '@/types/authFile';
-import type { OAuthModelAliasEntry } from '@/types';
+import type { AuthFileItem, AuthFilesResponse } from '@/types/authFile';
+import type { OAuthModelAliasEntry, WorkBuddyCreditsResponse } from '@/types';
 import { normalizeOAuthProviderKey } from '@/utils/providerKeys';
 import { getQuotaCacheKey } from '@/utils/quota/identity';
 import {
@@ -17,6 +17,43 @@ import {
 import { parseTimestampMs } from '@/utils/timestamp';
 import { normalizeAuthFileCooldowns, normalizeCooldownTimestamp } from './authFileCooldowns';
 
+type WorkBuddyCreditsPayload = {
+  credits?: unknown;
+  packages?: unknown;
+};
+
+const normalizeWorkBuddyCredits = (payload: WorkBuddyCreditsPayload): WorkBuddyCreditsResponse => {
+  const credits =
+    typeof payload.credits === 'number' && Number.isFinite(payload.credits)
+      ? payload.credits
+      : null;
+  if (credits === null) throw new Error('WorkBuddy credits response is invalid');
+
+  const packages = Array.isArray(payload.packages)
+    ? payload.packages.reduce<WorkBuddyCreditsResponse['packages']>((result, item) => {
+        if (!item || typeof item !== 'object') return result;
+        const entry = item as Record<string, unknown>;
+        const capacity = Number(entry.capacity);
+        const used = Number(entry.used);
+        const remaining = Number(entry.remaining);
+        if (![capacity, used, remaining].every(Number.isFinite)) return result;
+        result.push({
+          ...(typeof entry.name === 'string' && entry.name.trim()
+            ? { name: entry.name.trim() }
+            : {}),
+          capacity,
+          used,
+          remaining,
+          ...(typeof entry.expires_at === 'string' && entry.expires_at.trim()
+            ? { expiresAt: entry.expires_at.trim() }
+            : {}),
+        });
+        return result;
+      }, [])
+    : [];
+
+  return { credits, packages };
+};
 type AuthFileStatusResponse = { status: string; disabled: boolean };
 export type AuthFileLookup = { name: string; authIndex?: string };
 type AuthFileEntry = AuthFilesResponse['files'][number];
@@ -554,6 +591,17 @@ export const authFilesApi = {
       { timeout: 300_000 }
     );
     return normalizeAuthFileRefreshResults(response);
+  },
+
+  fetchWorkBuddyCredits: async (file: AuthFileItem): Promise<WorkBuddyCreditsResponse> => {
+    const rawAuthIndex = file.authIndex ?? file['auth_index'];
+    const authIndex = String(rawAuthIndex ?? '').trim();
+    if (!authIndex) throw new Error('WorkBuddy credential is missing auth_index');
+    const payload = await apiClient.post<WorkBuddyCreditsPayload>(
+      '/credentials/workbuddy/credits',
+      { auth_index: authIndex }
+    );
+    return normalizeWorkBuddyCredits(payload);
   },
 
   resetCooldown: (authIndex: string) =>
