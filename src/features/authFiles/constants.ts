@@ -5,6 +5,7 @@ import iconCodex from '@/assets/icons/codex.svg';
 import iconMeta from '@/assets/icons/meta.svg';
 import iconDevin from '@/assets/icons/devin.svg';
 import iconDevinDark from '@/assets/icons/devin-dark.svg';
+import iconWorkBuddy from '@/assets/icons/workbuddy.svg';
 import iconGemini from '@/assets/icons/gemini.svg';
 import iconGrok from '@/assets/icons/grok.svg';
 import iconGrokDark from '@/assets/icons/grok-dark.svg';
@@ -52,6 +53,8 @@ export const OAUTH_PROVIDER_PRESETS = [
   'codex',
   'devin',
   'kimi',
+  'workbuddy',
+  'workbuddy-ai',
 ];
 
 const OAUTH_PROVIDER_EXCLUDES = new Set(['all', 'unknown', 'empty']);
@@ -89,6 +92,8 @@ export const AUTH_FILE_ICONS: Record<string, AuthFileIconAsset> = {
   kimi: { light: iconKimiDark, dark: iconKimiLight },
   qwen: iconQwen,
   vertex: iconVertex,
+  workbuddy: iconWorkBuddy,
+  'workbuddy-ai': iconWorkBuddy,
 };
 
 export const clampCardPageSize = (value: number) =>

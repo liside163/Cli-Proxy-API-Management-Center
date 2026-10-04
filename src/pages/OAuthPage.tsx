@@ -31,6 +31,7 @@ import iconGrok from '@/assets/icons/grok.svg';
 import iconGrokDark from '@/assets/icons/grok-dark.svg';
 import iconDevin from '@/assets/icons/devin.svg';
 import iconDevinDark from '@/assets/icons/devin-dark.svg';
+import iconWorkBuddy from '@/assets/icons/workbuddy.svg';
 
 interface ProviderState {
   url?: string;
@@ -132,6 +133,18 @@ const PROVIDERS: BuiltInOAuthProviderCard[] = [
     id: 'devin',
     titleKey: 'auth_login.devin_oauth_title',
     icon: { light: iconDevin, dark: iconDevinDark },
+  },
+  {
+    kind: 'builtin',
+    id: 'workbuddy',
+    titleKey: 'auth_login.workbuddy_oauth_title',
+    icon: iconWorkBuddy,
+  },
+  {
+    kind: 'builtin',
+    id: 'workbuddy-ai',
+    titleKey: 'auth_login.workbuddy_ai_oauth_title',
+    icon: iconWorkBuddy,
   },
 ];
 
