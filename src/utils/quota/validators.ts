@@ -42,6 +42,10 @@ export function isWorkBuddyFile(file: AuthFileItem): boolean {
   return key === 'workbuddy' || key === 'workbuddy-ai';
 }
 
+export function isKiroFile(file: AuthFileItem): boolean {
+  return resolveAuthProvider(file) === 'kiro';
+}
+
 export function isDisabledAuthFile(file: AuthFileItem): boolean {
   const raw = (file as { disabled?: unknown }).disabled;
   if (typeof raw === 'boolean') return raw;

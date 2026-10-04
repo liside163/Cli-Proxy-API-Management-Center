@@ -10,6 +10,7 @@ import type {
   CodexQuotaState,
   DevinQuotaState,
   KimiQuotaState,
+  KiroQuotaState,
   MetaQuotaState,
   XaiQuotaState,
   WorkBuddyQuotaState,
@@ -28,6 +29,7 @@ interface QuotaStoreState {
   metaQuota: Record<string, MetaQuotaState>;
   xaiQuota: Record<string, XaiQuotaState>;
   workbuddyQuota: Record<string, WorkBuddyQuotaState>;
+  kiroQuota: Record<string, KiroQuotaState>;
   setAntigravityQuota: (updater: QuotaUpdater<Record<string, AntigravityQuotaState>>) => void;
   setClaudeQuota: (updater: QuotaUpdater<Record<string, ClaudeQuotaState>>) => void;
   setCodexQuota: (updater: QuotaUpdater<Record<string, CodexQuotaState>>) => void;
@@ -36,6 +38,7 @@ interface QuotaStoreState {
   setMetaQuota: (updater: QuotaUpdater<Record<string, MetaQuotaState>>) => void;
   setXaiQuota: (updater: QuotaUpdater<Record<string, XaiQuotaState>>) => void;
   setWorkBuddyQuota: (updater: QuotaUpdater<Record<string, WorkBuddyQuotaState>>) => void;
+  setKiroQuota: (updater: QuotaUpdater<Record<string, KiroQuotaState>>) => void;
   clearQuotaCache: (names?: string[]) => void;
 }
 
@@ -57,6 +60,7 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
   metaQuota: {},
   xaiQuota: {},
   workbuddyQuota: {},
+  kiroQuota: {},
   setAntigravityQuota: (updater) =>
     set((state) => ({
       antigravityQuota: resolveUpdater(updater, state.antigravityQuota),
@@ -87,6 +91,10 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
     set((state) => ({
       workbuddyQuota: resolveUpdater(updater, state.workbuddyQuota),
     })),
+  setKiroQuota: (updater) =>
+    set((state) => ({
+      kiroQuota: resolveUpdater(updater, state.kiroQuota),
+    })),
   clearQuotaCache: (names) =>
     set((state) => {
       if (names) {
@@ -115,6 +123,7 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
           metaQuota: omitNames(state.metaQuota),
           xaiQuota: omitNames(state.xaiQuota),
           workbuddyQuota: omitNames(state.workbuddyQuota),
+          kiroQuota: omitNames(state.kiroQuota),
         };
       }
       return {
@@ -128,6 +137,7 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
         metaQuota: {},
         xaiQuota: {},
         workbuddyQuota: {},
+        kiroQuota: {},
       };
     }),
 }));

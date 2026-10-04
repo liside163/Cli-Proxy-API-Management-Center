@@ -316,6 +316,46 @@ export interface WorkBuddyQuotaState extends WorkBuddyQuotaData {
   errorStatus?: number;
 }
 
+/** One usageBreakdownList row from Kiro's Get-Usage-Limits management call. */
+export interface KiroUsageEntry {
+  name: string | null;
+  used: number;
+  limit: number;
+  /** Unix seconds when this bucket resets; 0/absent when unknown. */
+  nextReset?: number;
+  freeTrial?: {
+    status?: string;
+    used?: number;
+    limit?: number;
+    expiry?: number;
+  } | null;
+}
+
+/** Shape the management /credentials/kiro/credits endpoint answers with. */
+export interface KiroUsageResponse {
+  email: string | null;
+  subscriptionTitle: string | null;
+  nextReset?: number;
+  entries: KiroUsageEntry[];
+}
+
+/** Read-only account/session observation plus the live usage snapshot. */
+export interface KiroQuotaData {
+  windows: WorkBuddyQuotaWindow[];
+  observedAtMs: number | null;
+  email: string | null;
+  plan: string | null;
+  /** Unix ms of the next reset across the breakdown, null when unknown. */
+  nextResetMs: number | null;
+  entries: KiroUsageEntry[];
+}
+
+export interface KiroQuotaState extends KiroQuotaData {
+  status: 'idle' | 'loading' | 'success' | 'error';
+  error?: string;
+  errorStatus?: number;
+}
+
 /** A whitelisted quota observation from Meta's Muse key endpoint. */
 export interface MetaQuotaWindow {
   id: 'window' | 'weekly';

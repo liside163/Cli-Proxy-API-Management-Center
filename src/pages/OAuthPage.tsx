@@ -32,6 +32,7 @@ import iconGrokDark from '@/assets/icons/grok-dark.svg';
 import iconDevin from '@/assets/icons/devin.svg';
 import iconDevinDark from '@/assets/icons/devin-dark.svg';
 import iconWorkBuddy from '@/assets/icons/workbuddy.png';
+import iconKiro from '@/assets/icons/kiro.svg';
 
 interface ProviderState {
   url?: string;
@@ -146,10 +147,23 @@ const PROVIDERS: BuiltInOAuthProviderCard[] = [
     titleKey: 'auth_login.workbuddy_ai_oauth_title',
     icon: iconWorkBuddy,
   },
+  {
+    kind: 'builtin',
+    id: 'kiro',
+    titleKey: 'auth_login.kiro_oauth_title',
+    icon: iconKiro,
+  },
 ];
 
 const BUILTIN_PROVIDER_IDS = new Set<string>(PROVIDERS.map((provider) => provider.id));
-const CALLBACK_SUPPORTED = new Set<string>(['codex', 'anthropic', 'antigravity', 'xai', 'devin']);
+const CALLBACK_SUPPORTED = new Set<string>([
+  'codex',
+  'anthropic',
+  'antigravity',
+  'xai',
+  'devin',
+  'kiro',
+]);
 const XAI_CALLBACK_URL = 'http://127.0.0.1:56121/callback';
 const SUCCESS_RESET_DELAY_MS = 5000;
 const getProviderI18nPrefix = (provider: string) => provider.replace('-', '_');
@@ -589,9 +603,22 @@ export function OAuthPage() {
       callbackError: undefined,
     });
     try {
-      await oauthApi.submitCallback(provider, redirectUrl, attempt.signal);
+      const res = await oauthApi.submitCallback(provider, redirectUrl, attempt.signal);
       if (!attempt.isCurrent()) return;
-      updateProviderState(provider, { callbackSubmitting: false, callbackStatus: 'success' });
+      const next: Partial<ProviderState> = {
+        callbackSubmitting: false,
+        callbackStatus: 'success',
+      };
+      // Kiro device leg: an AWS sign-in answers the portal callback with a
+      // device verification link + user code to show instead of the portal URL.
+      if (res.redirect_url) {
+        next.url = res.redirect_url;
+        next.callbackUrl = '';
+      }
+      if (res.user_code) {
+        next.userCode = res.user_code;
+      }
+      updateProviderState(provider, next);
       showNotification(t('auth_login.oauth_callback_success'), 'success');
     } catch (err: unknown) {
       if (!attempt.isCurrent()) return;

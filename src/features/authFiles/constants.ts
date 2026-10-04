@@ -6,6 +6,7 @@ import iconMeta from '@/assets/icons/meta.svg';
 import iconDevin from '@/assets/icons/devin.svg';
 import iconDevinDark from '@/assets/icons/devin-dark.svg';
 import iconWorkBuddy from '@/assets/icons/workbuddy.png';
+import iconKiro from '@/assets/icons/kiro.svg';
 import iconGemini from '@/assets/icons/gemini.svg';
 import iconGrok from '@/assets/icons/grok.svg';
 import iconGrokDark from '@/assets/icons/grok-dark.svg';
@@ -36,7 +37,8 @@ export type QuotaProviderType =
   | 'kimi'
   | 'xai'
   | 'meta'
-  | 'workbuddy';
+  | 'workbuddy'
+  | 'kiro';
 export type AuthFileQuotaFilter = QuotaProviderType | 'all' | null;
 export type OAuthConfigLoadError = 'loading' | 'unsupported' | 'load' | null;
 
@@ -49,6 +51,7 @@ export const QUOTA_PROVIDER_TYPES = new Set<QuotaProviderType>([
   'kimi',
   'xai',
   'workbuddy',
+  'kiro',
 ]);
 
 export const OAUTH_PROVIDER_PRESETS = [
@@ -63,6 +66,7 @@ export const OAUTH_PROVIDER_PRESETS = [
   'kimi',
   'workbuddy',
   'workbuddy-ai',
+  'kiro',
 ];
 
 const OAUTH_PROVIDER_EXCLUDES = new Set(['all', 'unknown', 'empty']);
@@ -102,6 +106,7 @@ export const AUTH_FILE_ICONS: Record<string, AuthFileIconAsset> = {
   vertex: iconVertex,
   workbuddy: iconWorkBuddy,
   'workbuddy-ai': iconWorkBuddy,
+  kiro: iconKiro,
 };
 
 export const clampCardPageSize = (value: number) =>

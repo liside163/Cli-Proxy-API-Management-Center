@@ -18,7 +18,8 @@ export type BuiltInOAuthProvider =
   | 'devin'
   | 'meta'
   | 'workbuddy'
-  | 'workbuddy-ai';
+  | 'workbuddy-ai'
+  | 'kiro';
 
 export interface OAuthStartResponse {
   url: string;
@@ -29,7 +30,13 @@ export interface OAuthStartResponse {
 }
 
 export interface OAuthCallbackResponse {
-  status: 'ok';
+  status: 'ok' | 'error';
+  error?: string;
+  // Kiro device leg: after the portal callback is pasted, an AWS Builder ID /
+  // Identity Center sign-in continues as a device authorization. The backend
+  // returns the verification link and user code the panel must display next.
+  redirect_url?: string;
+  user_code?: string;
 }
 
 export interface OAuthCancelResponse {

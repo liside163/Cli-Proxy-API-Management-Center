@@ -27,6 +27,8 @@ import { XAI_CONFIG } from './xai/data';
 import { XaiQuotaBody } from './xai/XaiQuotaBody';
 import { WORKBUDDY_CONFIG } from './workbuddy/data';
 import { WorkBuddyQuotaBody } from './workbuddy/WorkBuddyQuotaBody';
+import { KIRO_CONFIG } from './kiro/data';
+import { KiroQuotaBody } from './kiro/KiroQuotaBody';
 
 /** 所有 provider 额度状态的公共骨架（各 *QuotaState 的结构子集）。 */
 export interface QuotaCardState {
@@ -63,6 +65,7 @@ export const QUOTA_ADAPTERS: Record<QuotaProviderType, QuotaAdapter> = {
   meta: { ...META_CONFIG, Body: MetaQuotaBody } as unknown as QuotaAdapter,
   xai: { ...XAI_CONFIG, Body: XaiQuotaBody } as unknown as QuotaAdapter,
   workbuddy: { ...WORKBUDDY_CONFIG, Body: WorkBuddyQuotaBody } as unknown as QuotaAdapter,
+  kiro: { ...KIRO_CONFIG, Body: KiroQuotaBody } as unknown as QuotaAdapter,
 };
 
 export type QuotaMapUpdater = (

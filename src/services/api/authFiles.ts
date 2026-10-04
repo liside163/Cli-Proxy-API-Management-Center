@@ -6,7 +6,7 @@ import { apiClient } from './client';
 import { getConfigValue, guardConfigConnection } from './configValue';
 import { isRecord } from '@/utils/helpers';
 import type { AuthFileItem, AuthFilesResponse } from '@/types/authFile';
-import type { OAuthModelAliasEntry, WorkBuddyCreditsResponse } from '@/types';
+import type { KiroUsageResponse, OAuthModelAliasEntry, WorkBuddyCreditsResponse } from '@/types';
 import { normalizeOAuthProviderKey } from '@/utils/providerKeys';
 import { getQuotaCacheKey } from '@/utils/quota/identity';
 import {
@@ -54,6 +54,57 @@ const normalizeWorkBuddyCredits = (payload: WorkBuddyCreditsPayload): WorkBuddyC
 
   return { credits, packages };
 };
+
+type KiroUsagePayload = {
+  email?: unknown;
+  subscription_title?: unknown;
+  next_reset?: unknown;
+  usage?: unknown;
+};
+
+const normalizeKiroUsage = (payload: KiroUsagePayload): KiroUsageResponse => {
+  const readNum = (value: unknown): number | null =>
+    typeof value === 'number' && Number.isFinite(value) ? value : null;
+  const entries: KiroUsageResponse['entries'] = Array.isArray(payload.usage)
+    ? payload.usage.reduce<KiroUsageResponse['entries']>((result, item) => {
+        if (!isRecord(item)) return result;
+        const used = readNum(item.used);
+        const limit = readNum(item.limit);
+        if (used === null || limit === null) return result;
+        const freeTrial = isRecord(item.free_trial) ? item.free_trial : null;
+        result.push({
+          name: typeof item.name === 'string' && item.name.trim() ? item.name.trim() : null,
+          used,
+          limit,
+          ...(readNum(item.next_reset) !== null ? { nextReset: readNum(item.next_reset)! } : {}),
+          ...(freeTrial
+            ? {
+                freeTrial: {
+                  ...(typeof freeTrial.status === 'string' ? { status: freeTrial.status } : {}),
+                  ...(readNum(freeTrial.used) !== null ? { used: readNum(freeTrial.used)! } : {}),
+                  ...(readNum(freeTrial.limit) !== null ? { limit: readNum(freeTrial.limit)! } : {}),
+                  ...(readNum(freeTrial.expiry) !== null
+                    ? { expiry: readNum(freeTrial.expiry)! }
+                    : {}),
+                },
+              }
+            : {}),
+        });
+        return result;
+      }, [])
+    : [];
+  const nextReset = readNum(payload.next_reset);
+  return {
+    email: typeof payload.email === 'string' && payload.email.trim() ? payload.email.trim() : null,
+    subscriptionTitle:
+      typeof payload.subscription_title === 'string' && payload.subscription_title.trim()
+        ? payload.subscription_title.trim()
+        : null,
+    ...(nextReset !== null ? { nextReset } : {}),
+    entries,
+  };
+};
+
 type AuthFileStatusResponse = { status: string; disabled: boolean };
 export type AuthFileLookup = { name: string; authIndex?: string };
 type AuthFileEntry = AuthFilesResponse['files'][number];
@@ -602,6 +653,16 @@ export const authFilesApi = {
       { auth_index: authIndex }
     );
     return normalizeWorkBuddyCredits(payload);
+  },
+
+  fetchKiroUsage: async (file: AuthFileItem): Promise<KiroUsageResponse> => {
+    const rawAuthIndex = file.authIndex ?? file['auth_index'];
+    const authIndex = String(rawAuthIndex ?? '').trim();
+    if (!authIndex) throw new Error('Kiro credential is missing auth_index');
+    const payload = await apiClient.post<KiroUsagePayload>('/credentials/kiro/credits', {
+      auth_index: authIndex,
+    });
+    return normalizeKiroUsage(payload);
   },
 
   resetCooldown: (authIndex: string) =>
