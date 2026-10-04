@@ -98,7 +98,6 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "quick_start": "Quick Start",
     "ai_providers": "AI Providers",
     "auth_files": "Auth Files",
     "oauth": "OAuth Login",
@@ -118,7 +117,6 @@
   },
   "nav_meta": {
     "dashboard": "Operations overview",
-    "quick_start": "APIKEY.FUN setup",
     "ai_providers": "Upstream model routing",
     "auth_files": "Auth files & credentials",
     "oauth": "OAuth authorization",
@@ -2255,6 +2253,13 @@
     "expiry_unknown": "Unknown",
     "no_data": "No account info recorded in the credential",
     "missing_auth_index": "Missing auth_index",
-    "stale_request": "Stale request"
+    "stale_request": "Stale request",
+    "idle": "Click to load WorkBuddy account info",
+    "loading": "Reading WorkBuddy credential…",
+    "load_failed": "Failed to load WorkBuddy info: {{message}}",
+    "empty_title": "No WorkBuddy credentials",
+    "empty_desc": "Add a WorkBuddy or WorkBuddy AI account from the OAuth page to see account and token health here.",
+    "observed_at": "Observed at {{time}}",
+    "observed_unknown": "Observation time unknown"
   }
 }

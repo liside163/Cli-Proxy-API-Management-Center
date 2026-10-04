@@ -98,7 +98,6 @@
   },
   "nav": {
     "dashboard": "儀表板",
-    "quick_start": "快速開始",
     "ai_providers": "AI 供應商",
     "auth_files": "驗證檔案",
     "oauth": "OAuth 登入",
@@ -118,7 +117,6 @@
   },
   "nav_meta": {
     "dashboard": "運行總覽",
-    "quick_start": "APIKEY.FUN 快速設定",
     "ai_providers": "上游模型路由",
     "auth_files": "Auth 檔案與憑證",
     "oauth": "OAuth 授權登入",
@@ -2279,6 +2277,13 @@
     "expiry_unknown": "未知",
     "no_data": "憑證內未記錄帳號資訊",
     "missing_auth_index": "缺少 auth_index",
-    "stale_request": "請求已過期"
+    "stale_request": "請求已過期",
+    "idle": "點擊載入 WorkBuddy 帳號資訊",
+    "loading": "正在讀取 WorkBuddy 憑證…",
+    "load_failed": "載入 WorkBuddy 資訊失敗：{{message}}",
+    "empty_title": "暫無 WorkBuddy 憑證",
+    "empty_desc": "透過 OAuth 登入頁新增 WorkBuddy 或 WorkBuddy AI 帳號後，可在此檢視帳號與權杖健康狀態。",
+    "observed_at": "觀察於 {{time}}",
+    "observed_unknown": "觀察時間未知"
   }
 }

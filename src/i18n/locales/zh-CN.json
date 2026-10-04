@@ -98,7 +98,6 @@
   },
   "nav": {
     "dashboard": "仪表盘",
-    "quick_start": "快速开始",
     "ai_providers": "AI 提供商",
     "auth_files": "认证文件",
     "oauth": "OAuth 登录",
@@ -118,7 +117,6 @@
   },
   "nav_meta": {
     "dashboard": "运行总览",
-    "quick_start": "快速配置",
     "ai_providers": "上游模型路由",
     "auth_files": "Auth 文件与凭证",
     "oauth": "OAuth 授权登录",
@@ -2253,6 +2251,13 @@
     "expiry_unknown": "未知",
     "no_data": "凭据内未记录账号信息",
     "missing_auth_index": "缺少 auth_index",
-    "stale_request": "请求已过期"
+    "stale_request": "请求已过期",
+    "idle": "点击加载 WorkBuddy 账号信息",
+    "loading": "正在读取 WorkBuddy 凭据…",
+    "load_failed": "加载 WorkBuddy 信息失败：{{message}}",
+    "empty_title": "暂无 WorkBuddy 凭据",
+    "empty_desc": "通过 OAuth 登录页添加 WorkBuddy 或 WorkBuddy AI 账号后，可在此查看账号与令牌健康状态。",
+    "observed_at": "观察于 {{time}}",
+    "observed_unknown": "观察时间未知"
   }
 }

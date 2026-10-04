@@ -35,11 +35,6 @@ export const KIMI_BASE_URL_OPTIONS = [
 
 export const KIMI_PROTOCOL_LABELS = ['openai', 'anthropic', 'codexResponses'] as const;
 
-export const getKimiAffiliateUrl = (language: string | undefined | null): string =>
-  language?.toLowerCase().startsWith('zh')
-    ? KIMI_CHINESE_AFFILIATE_URL
-    : KIMI_INTERNATIONAL_AFFILIATE_URL;
-
 const normalizeText = (value: string | undefined | null): string =>
   String(value ?? '')
     .trim()

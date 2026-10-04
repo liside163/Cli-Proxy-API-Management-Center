@@ -98,7 +98,6 @@
   },
   "nav": {
     "dashboard": "Панель",
-    "quick_start": "Быстрый старт",
     "ai_providers": "Поставщики AI",
     "auth_files": "Файлы аутентификации",
     "oauth": "OAuth вход",
@@ -117,7 +116,6 @@
   },
   "nav_meta": {
     "dashboard": "Обзор работы",
-    "quick_start": "Настройка APIKEY.FUN",
     "ai_providers": "Маршрутизация моделей",
     "auth_files": "Файлы и учётные данные",
     "oauth": "Авторизация OAuth",
@@ -2249,6 +2247,13 @@
     "expiry_unknown": "Неизвестно",
     "no_data": "В учётных данных нет информации об аккаунте",
     "missing_auth_index": "Отсутствует auth_index",
-    "stale_request": "Устаревший запрос"
+    "stale_request": "Устаревший запрос",
+    "idle": "Нажмите, чтобы загрузить данные WorkBuddy",
+    "loading": "Чтение учётных данных WorkBuddy…",
+    "load_failed": "Не удалось загрузить данные WorkBuddy: {{message}}",
+    "empty_title": "Нет учётных данных WorkBuddy",
+    "empty_desc": "Добавьте аккаунт WorkBuddy или WorkBuddy AI на странице OAuth, чтобы видеть состояние аккаунта и токена.",
+    "observed_at": "Наблюдение в {{time}}",
+    "observed_unknown": "Время наблюдения неизвестно"
   }
 }
