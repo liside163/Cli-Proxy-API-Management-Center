@@ -277,6 +277,29 @@ export interface DevinQuotaState extends DevinQuotaData {
   errorStatus?: number;
 }
 
+export interface WorkBuddyQuotaWindow {
+  id: 'account' | 'token_expiry';
+  label?: string;
+  /** Display value; for account this is the nickname, for token_expiry a timestamp. */
+  value: string | null;
+  /** Unix ms; used by token_expiry rows and the urgent-row timeline. */
+  atMs: number | null;
+}
+
+/** Read-only account/session observation; no real balance endpoint exists yet. */
+export interface WorkBuddyQuotaData {
+  windows: WorkBuddyQuotaWindow[];
+  observedAtMs: number | null;
+  site: 'workbuddy' | 'workbuddy-ai' | null;
+  uid: string | null;
+}
+
+export interface WorkBuddyQuotaState extends WorkBuddyQuotaData {
+  status: 'idle' | 'loading' | 'success' | 'error';
+  error?: string;
+  errorStatus?: number;
+}
+
 /** A whitelisted quota observation from Meta's Muse key endpoint. */
 export interface MetaQuotaWindow {
   id: 'window' | 'weekly';

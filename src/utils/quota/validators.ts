@@ -37,6 +37,11 @@ export function isXaiFile(file: AuthFileItem): boolean {
   return resolveAuthProvider(file) === 'xai';
 }
 
+export function isWorkBuddyFile(file: AuthFileItem): boolean {
+  const key = resolveAuthProvider(file);
+  return key === 'workbuddy' || key === 'workbuddy-ai';
+}
+
 export function isDisabledAuthFile(file: AuthFileItem): boolean {
   const raw = (file as { disabled?: unknown }).disabled;
   if (typeof raw === 'boolean') return raw;

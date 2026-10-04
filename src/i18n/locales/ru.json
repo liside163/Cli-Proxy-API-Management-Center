@@ -2241,5 +2241,14 @@
     "unavailable": "Сбросы временно недоступны.",
     "rate_limited": "Слишком много запросов.",
     "auth_error": "Авторизация отклонена."
+  },
+  "workbuddy_quota": {
+    "site_label": "Сайт",
+    "account_label": "Аккаунт",
+    "token_expiry": "Истекает токен доступа",
+    "expiry_unknown": "Неизвестно",
+    "no_data": "В учётных данных нет информации об аккаунте",
+    "missing_auth_index": "Отсутствует auth_index",
+    "stale_request": "Устаревший запрос"
   }
 }

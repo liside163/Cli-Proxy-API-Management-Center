@@ -31,7 +31,7 @@ import iconGrok from '@/assets/icons/grok.svg';
 import iconGrokDark from '@/assets/icons/grok-dark.svg';
 import iconDevin from '@/assets/icons/devin.svg';
 import iconDevinDark from '@/assets/icons/devin-dark.svg';
-import iconWorkBuddy from '@/assets/icons/workbuddy.svg';
+import iconWorkBuddy from '@/assets/icons/workbuddy.png';
 
 interface ProviderState {
   url?: string;

@@ -2247,5 +2247,14 @@
     "unavailable": "Resets are currently unavailable.",
     "rate_limited": "Request rate limited.",
     "auth_error": "Authorization was refused."
+  },
+  "workbuddy_quota": {
+    "site_label": "Site",
+    "account_label": "Account",
+    "token_expiry": "Access token expires",
+    "expiry_unknown": "Unknown",
+    "no_data": "No account info recorded in the credential",
+    "missing_auth_index": "Missing auth_index",
+    "stale_request": "Stale request"
   }
 }

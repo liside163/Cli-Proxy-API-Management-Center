@@ -2271,5 +2271,14 @@
     "unavailable": "重置暫不可用。",
     "rate_limited": "請求過於頻繁。",
     "auth_error": "授權遭拒。"
+  },
+  "workbuddy_quota": {
+    "site_label": "站點",
+    "account_label": "帳號",
+    "token_expiry": "存取權杖到期",
+    "expiry_unknown": "未知",
+    "no_data": "憑證內未記錄帳號資訊",
+    "missing_auth_index": "缺少 auth_index",
+    "stale_request": "請求已過期"
   }
 }

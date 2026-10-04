@@ -2245,5 +2245,14 @@
     "unavailable": "重置暂不可用。",
     "rate_limited": "请求过于频繁。",
     "auth_error": "授权被拒绝。"
+  },
+  "workbuddy_quota": {
+    "site_label": "站点",
+    "account_label": "账号",
+    "token_expiry": "访问令牌到期",
+    "expiry_unknown": "未知",
+    "no_data": "凭据内未记录账号信息",
+    "missing_auth_index": "缺少 auth_index",
+    "stale_request": "请求已过期"
   }
 }
